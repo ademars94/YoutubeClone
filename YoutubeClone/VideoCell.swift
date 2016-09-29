@@ -32,10 +32,7 @@ class VideoCell: BaseCell {
       titleLabel.text = video?.title
       
       setupThumbnailImage()
-      
-      if let profileImageName = video?.channel?.profileImageName {
-        userProfileImageView.image = UIImage(named: profileImageName)
-      }
+      setupProfileImage()
       
       if let channelName = video?.channel?.name, let viewCount = video?.viewCount {
         let numberFormatter = NumberFormatter()
@@ -66,7 +63,7 @@ class VideoCell: BaseCell {
   
   let thumbnailImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(named: "default-video-thumbnail")
+    imageView.image = UIImage(named: "default-thumbnail-image")
     imageView.contentMode = .scaleAspectFill
     imageView.clipsToBounds = true
     return imageView
@@ -75,6 +72,7 @@ class VideoCell: BaseCell {
   let userProfileImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(named: "question-mark-icon")
+    imageView.contentMode = .scaleAspectFill
     imageView.layer.cornerRadius = 22
     imageView.layer.masksToBounds = true
     return imageView
@@ -105,18 +103,13 @@ class VideoCell: BaseCell {
   
   func setupThumbnailImage() {
     if let thumbnailImageUrl = video?.thumbnailImageName {
-      let url = URL(string: thumbnailImageUrl)
-      URLSession.shared.dataTask(with: url!) { (data, response, error) in
-        if error != nil {
-          print(error)
-          return
-        }
-        
-        DispatchQueue.main.async {
-          self.thumbnailImageView.image = UIImage(data: data!)
-        }
-      }.resume()
-      
+      thumbnailImageView.loadImageUsing(urlString: thumbnailImageUrl)
+    }
+  }
+  
+  func setupProfileImage() {
+    if let profileImageUrl = video?.channel?.profileImageName {
+      userProfileImageView.loadImageUsing(urlString: profileImageUrl)
     }
   }
   
