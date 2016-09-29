@@ -20,16 +20,34 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     navigationItem.titleView = titleLabel
     
     navigationController?.navigationBar.isTranslucent = false
+    
     collectionView?.backgroundColor = UIColor.white
     collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: "cellId")
+    collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0) // Compensate for menu bar height
+    collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(50, 0, 0, 0) // Compensate for menu bar height
     
     setupMenuBar()
+    setupNavBarButtons()
   }
   
   let menuBar: MenuBar = {
-    let bar = MenuBar()
-    return bar
+    let mb = MenuBar()
+    return mb
   }()
+  
+  func setupNavBarButtons() {
+    let searchBarButtonItem = UIBarButtonItem(image: UIImage(named: "search-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSearch))
+    let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
+    navigationItem.rightBarButtonItems = [moreBarButtonItem, searchBarButtonItem]
+  }
+  
+  func handleMore() {
+    print("Showing more...")
+  }
+  
+  func handleSearch() {
+    print("Searching...")
+  }
   
   private func setupMenuBar() {
     view.addSubview(menuBar)
