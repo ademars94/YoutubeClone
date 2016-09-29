@@ -45,14 +45,10 @@ class VideoCell: BaseCell {
       let size = CGSize(width: frame.width - 84, height: 1000)
       let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
       if let title = video?.title {
-        print("Setting titleLabelHeightConstraint...")
-        // TODO: Fix this conditional so long names are displayed on two lines
-        let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)], context: nil)
-        if estimatedRect.size.height > 20 {
-          print("2 lines")
+        let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 17)], context: nil)
+        if estimatedRect.size.height > 21 {
           titleLabelHeightConstraint?.constant = 44
         } else {
-          print("1 line")
           titleLabelHeightConstraint?.constant = 20
         }
       }
