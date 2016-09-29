@@ -7,12 +7,6 @@
 //
 
 import UIKit
-  
-extension UIColor {
-  static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-    return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
-  }
-}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UINavigationBar.appearance().barTintColor = UIColor.rgb(red: 230, green: 32, blue: 31)
     
     application.statusBarStyle = .lightContent
+    
+    let statusBarBackgroundView = UIView()
+    statusBarBackgroundView.backgroundColor = UIColor.rgb(red: 194, green: 31, blue: 31)
+    
+    window?.addSubview(statusBarBackgroundView)
+    window?.addConstraintsWithFormat("H:|[v0]|", views: statusBarBackgroundView)
+    window?.addConstraintsWithFormat("V:|[v0(20)]", views: statusBarBackgroundView)
     
     return true
   }
