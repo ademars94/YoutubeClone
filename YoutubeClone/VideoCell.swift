@@ -57,16 +57,16 @@ class VideoCell: BaseCell {
   
   var titleLabelHeightConstraint: NSLayoutConstraint?
   
-  let thumbnailImageView: UIImageView = {
-    let imageView = UIImageView()
+  let thumbnailImageView: CustomImageView = {
+    let imageView = CustomImageView()
     imageView.image = UIImage(named: "default-thumbnail-image")
     imageView.contentMode = .scaleAspectFill
     imageView.clipsToBounds = true
     return imageView
   }()
   
-  let userProfileImageView: UIImageView = {
-    let imageView = UIImageView()
+  let userProfileImageView: CustomImageView = {
+    let imageView = CustomImageView()
     imageView.image = UIImage(named: "question-mark-icon")
     imageView.contentMode = .scaleAspectFill
     imageView.layer.cornerRadius = 22
@@ -99,12 +99,23 @@ class VideoCell: BaseCell {
   
   func setupThumbnailImage() {
     if let thumbnailImageUrl = video?.thumbnailImageName {
+      
+      
+      print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+      print("Cell Title: \(video?.title)")
+      print("Cell Video Thumbnail: \(video?.thumbnailImageName)")
+      print("Cell Thumbnail URL: \(thumbnailImageUrl)")
+      print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
+      
+      
       thumbnailImageView.loadImageUsing(urlString: thumbnailImageUrl)
     }
   }
   
+  
   func setupProfileImage() {
     if let profileImageUrl = video?.channel?.profileImageName {
+      
       userProfileImageView.loadImageUsing(urlString: profileImageUrl)
     }
   }
