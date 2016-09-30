@@ -9,6 +9,8 @@
 
 import UIKit
 
+// MARK: Extensions
+
 extension UIColor {
   static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
     return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
@@ -29,6 +31,8 @@ extension UIView {
   }
 }
 
+// MARK: Subclasses
+
 let imageCache = NSCache<NSString, UIImage>()
 
 class CustomImageView: UIImageView {
@@ -42,6 +46,7 @@ class CustomImageView: UIImageView {
     image = nil
     
     if let imageFromCache = imageCache.object(forKey: urlString as NSString) {
+      print("Loading from cache: \(self.imageUrlString!)")
       self.image = imageFromCache
       return
     }
@@ -54,6 +59,8 @@ class CustomImageView: UIImageView {
       
       DispatchQueue.main.async {
         if self.imageUrlString == urlString {
+          print("Loading from network: \(self.imageUrlString!)")
+          
           let imageToBeCached = UIImage(data: data!)
           
           self.image = imageToBeCached

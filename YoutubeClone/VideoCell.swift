@@ -99,15 +99,6 @@ class VideoCell: BaseCell {
   
   func setupThumbnailImage() {
     if let thumbnailImageUrl = video?.thumbnailImageName {
-      
-      
-      print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
-      print("Cell Title: \(video?.title)")
-      print("Cell Video Thumbnail: \(video?.thumbnailImageName)")
-      print("Cell Thumbnail URL: \(thumbnailImageUrl)")
-      print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
-      
-      
       thumbnailImageView.loadImageUsing(urlString: thumbnailImageUrl)
     }
   }
@@ -115,7 +106,6 @@ class VideoCell: BaseCell {
   
   func setupProfileImage() {
     if let profileImageUrl = video?.channel?.profileImageName {
-      
       userProfileImageView.loadImageUsing(urlString: profileImageUrl)
     }
   }

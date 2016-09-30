@@ -10,51 +10,6 @@ import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
-//  var videos: [Video] = {
-//    
-//    // Channels
-//    var obamaChannel = Channel()
-//    obamaChannel.name = "BarackObamaOfficial"
-//    obamaChannel.profileImageName = "obama-profile-image"
-//    
-//    var bidenChannel = Channel()
-//    bidenChannel.name = "JoeBidenOfficial"
-//    bidenChannel.profileImageName = "biden-profile-image"
-//    
-//    // Videos
-//    var redVideo = Video()
-//    redVideo.title = "Red Video with Arbitrarily Long Title to Demonstrate Text Wrapping"
-//    redVideo.thumbnailImageName = "generic-video-thumbnail-red"
-//    redVideo.channel = obamaChannel
-//    redVideo.viewCount = 1876324203
-//    
-//    var orangeVideo = Video()
-//    orangeVideo.title = "Orange Video"
-//    orangeVideo.thumbnailImageName = "generic-video-thumbnail-orange"
-//    orangeVideo.channel = bidenChannel
-//    orangeVideo.viewCount = 2846384982
-//    
-//    var yellowVideo = Video()
-//    yellowVideo.title = "Yellow Video"
-//    yellowVideo.thumbnailImageName = "generic-video-thumbnail-yellow"
-//    yellowVideo.channel = obamaChannel
-//    yellowVideo.viewCount = 923877949
-//    
-//    var greenVideo = Video()
-//    greenVideo.title = "Green Video"
-//    greenVideo.thumbnailImageName = "generic-video-thumbnail-green"
-//    greenVideo.channel = bidenChannel
-//    greenVideo.viewCount = 887384709
-//    
-//    var blueVideo = Video()
-//    blueVideo.title = "Blue Video"
-//    blueVideo.thumbnailImageName = "generic-video-thumbnail-blue"
-//    blueVideo.channel = obamaChannel
-//    blueVideo.viewCount = 2783879409
-//    
-//    return [redVideo, orangeVideo, yellowVideo, greenVideo, blueVideo]
-//  }()
-  
   var videos: [Video]?
 
   override func viewDidLoad() {
@@ -84,6 +39,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     return mb
   }()
   
+  let settingsLauncher = SettingsLauncher()
+  
   func setupNavBarButtons() {
     let searchBarButtonItem = UIBarButtonItem(image: UIImage(named: "search-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSearch))
     let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
@@ -91,7 +48,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   }
   
   func handleMore() {
-    print("Showing more...")
+    settingsLauncher.showSettings()
   }
   
   func handleSearch() {
