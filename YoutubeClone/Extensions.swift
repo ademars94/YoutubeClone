@@ -32,6 +32,9 @@ extension UIView {
 extension UIImageView {
   func loadImageUsing(urlString: String) {
     let url = URL(string: urlString)
+    
+    image = nil
+    
     URLSession.shared.dataTask(with: url!) { (data, response, error) in
       if error != nil {
         print(error)
