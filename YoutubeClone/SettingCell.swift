@@ -24,6 +24,7 @@ class SettingCell: BaseCell {
   let nameLabel: UILabel = {
     let l = UILabel()
     l.text = "Setting"
+    l.textColor = UIColor.darkGray
     l.font = UIFont.systemFont(ofSize: 14)
     return l
   }()
@@ -31,10 +32,18 @@ class SettingCell: BaseCell {
   let icon: UIImageView = {
     let i = UIImageView()
     i.image = UIImage(named: "gear-icon")?.withRenderingMode(.alwaysTemplate)
-    i.tintColor = UIColor.gray
+    i.tintColor = UIColor.darkGray
     i.contentMode = .scaleAspectFill
     return i
   }()
+  
+  override var isHighlighted: Bool {
+    didSet {
+      backgroundColor = isHighlighted ? UIColor.darkGray : UIColor.white
+      nameLabel.textColor = isHighlighted ? UIColor.white : UIColor.darkGray
+      icon.tintColor = isHighlighted ? UIColor.white : UIColor.darkGray
+    }
+  }
   
   override func setupViews() {
     super.setupViews()

@@ -11,6 +11,18 @@ import UIKit
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
   var videos: [Video]?
+  let cellId = "cellId"
+  
+  let menuBar: MenuBar = {
+    let mb = MenuBar()
+    return mb
+  }()
+  
+  lazy var settingsLauncher: SettingsLauncher = {
+    let launcher = SettingsLauncher()
+    launcher.homeController = self
+    return launcher
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,15 +46,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     setupNavBarButtons()
   }
   
-  let cellId = "cellId"
-  
-  let menuBar: MenuBar = {
-    let mb = MenuBar()
-    return mb
-  }()
-  
-  let settingsLauncher = SettingsLauncher()
-  
   func setupNavBarButtons() {
     let searchBarButtonItem = UIBarButtonItem(image: UIImage(named: "search-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSearch))
     let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
@@ -51,6 +54,16 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   
   func handleMore() {
     settingsLauncher.showSettings()
+  }
+  
+  func showControllerFor(setting: Setting) {
+    let settingViewController = UIViewController()
+    
+    settingViewController.navigationItem.title = setting.name
+    settingViewController.view.backgroundColor = UIColor.white
+    
+    navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+    navigationController?.pushViewController(settingViewController, animated: true)
   }
   
   func handleSearch() {

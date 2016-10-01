@@ -20,6 +20,8 @@ class Setting {
 
 class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   
+  var homeController: HomeController?
+  
   let darkViewOverlay: UIView = {
     let dvo = UIView()
     dvo.backgroundColor = UIColor(white: 0, alpha: 0.5)
@@ -60,7 +62,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
   func showSettings() {
     if let window = UIApplication.shared.keyWindow {
       darkViewOverlay.frame = window.frame
-      darkViewOverlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
+      darkViewOverlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleOverlayTap)))
       
       let height: CGFloat = CGFloat(settings.count) * cellHeight
       let y = window.frame.height - height
@@ -76,13 +78,21 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     }
   }
   
-  func handleDismiss() {
-    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: { 
+  func handleOverlayTap() {
+    handleDismiss(forSetting: nil)
+  }
+  
+  func handleDismiss(forSetting setting: Setting?) {
+    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
       self.darkViewOverlay.alpha = 0
       if let window = UIApplication.shared.keyWindow {
         self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
       }
-    }, completion: nil)
+    }) { (true) in
+      if let setting = setting, setting.name != "Cancel" {
+        self.homeController?.showControllerFor(setting: setting)
+      }
+    }
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -104,5 +114,9 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    handleDismiss(forSetting: settings[indexPath.row])
   }
 }
