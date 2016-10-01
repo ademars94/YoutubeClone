@@ -9,13 +9,22 @@
 import UIKit
 
 class Setting {
-  let name: String
+  let name: SettingName
   let imageName: String
   
-  init(name: String, imageName: String) {
+  init(name: SettingName, imageName: String) {
     self.name = name
     self.imageName = imageName
   }
+}
+
+enum SettingName: String {
+  case settings = "Settings"
+  case terms = "Terms & Privacy Policy"
+  case feedback = "Send Feedback"
+  case help = "Help"
+  case switchAccount = "Switch Account"
+  case cancel = "Cancel"
 }
 
 class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -38,12 +47,12 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
   
   let settings: [Setting] = {
     return [
-      Setting(name: "Settings", imageName: "gear-icon"),
-      Setting(name: "Terms & Privacy Policy", imageName: "lock-icon"),
-      Setting(name: "Send Feedback", imageName: "feedback-icon"),
-      Setting(name: "Help", imageName: "help-icon"),
-      Setting(name: "Switch Account", imageName: "user-icon-alt"),
-      Setting(name: "Cancel", imageName: "x-icon")
+      Setting(name: .settings, imageName: "gear-icon"),
+      Setting(name: .terms, imageName: "lock-icon"),
+      Setting(name: .feedback, imageName: "feedback-icon"),
+      Setting(name: .help, imageName: "help-icon"),
+      Setting(name: .switchAccount, imageName: "user-icon-alt"),
+      Setting(name: .cancel, imageName: "gear-icon")
     ]
   }()
   
@@ -89,7 +98,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
         self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
       }
     }) { (true) in
-      if let setting = setting, setting.name != "Cancel" {
+      if let setting = setting, setting.name != .cancel {
         self.homeController?.showControllerFor(setting: setting)
       }
     }

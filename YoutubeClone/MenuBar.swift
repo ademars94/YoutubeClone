@@ -23,6 +23,9 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
   let cellId = "menuBarCellId"
   let imageNames = ["home-icon", "fire-icon", "playlist-icon", "user-icon"]
   
+  // Variable is used to change the horizontal position of the bar
+  var horizontalBarLeftAnchorConstraint: NSLayoutConstraint?
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
@@ -33,6 +36,23 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     // Select first item in menu bar
     let selectedIndexPath = IndexPath(item: 0, section: 0)
     collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .init(rawValue: 0))
+    
+    setupHorizontalBar()
+  }
+  
+  func setupHorizontalBar() {
+    let horizontalBarView = UIView()
+    horizontalBarView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+    horizontalBarView.translatesAutoresizingMaskIntoConstraints = false
+    
+    addSubview(horizontalBarView)
+    
+    horizontalBarLeftAnchorConstraint = horizontalBarView.leftAnchor.constraint(equalTo: self.leftAnchor)
+    horizontalBarLeftAnchorConstraint?.isActive = true
+    
+    horizontalBarView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    horizontalBarView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1/4).isActive = true
+    horizontalBarView.heightAnchor.constraint(equalToConstant: 4).isActive = true
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -52,6 +72,16 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    // Get x value depending on which item is selected times one fourth of the view width
+    let x = CGFloat(indexPath.item) * self.frame.width / 4
+    self.horizontalBarLeftAnchorConstraint?.constant = x
+    
+    UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+      self.layoutIfNeeded()
+    }, completion: nil)
   }
   
   required init?(coder aDecoder: NSCoder) {

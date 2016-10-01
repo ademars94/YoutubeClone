@@ -59,7 +59,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   func showControllerFor(setting: Setting) {
     let settingViewController = UIViewController()
     
-    settingViewController.navigationItem.title = setting.name
+    settingViewController.navigationItem.title = setting.name.rawValue
     settingViewController.view.backgroundColor = UIColor.white
     
     navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
@@ -111,9 +111,21 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   }
   
   private func setupMenuBar() {
+    navigationController?.hidesBarsOnSwipe = true
+    
+    let redView = UIView()
+    redView.backgroundColor = UIColor.rgb(red: 230, green: 32, blue: 31)
+    
+    // redView removes space on navbar slide up
+    view.addSubview(redView)
+    view.addConstraintsWithFormat("H:|[v0]|", views: redView)
+    view.addConstraintsWithFormat("V:[v0(50)]", views: redView)
+    
     view.addSubview(menuBar)
     view.addConstraintsWithFormat("H:|[v0]|", views: menuBar)
-    view.addConstraintsWithFormat("V:|[v0(50)]", views: menuBar)
+    view.addConstraintsWithFormat("V:[v0(50)]", views: menuBar)
+    
+    menuBar.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
