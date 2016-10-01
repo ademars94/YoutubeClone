@@ -46,6 +46,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
   }()
   
   let cellId = "cellId"
+  let cellHeight: CGFloat = 50
   
   override init() {
     super.init()
@@ -61,7 +62,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
       darkViewOverlay.frame = window.frame
       darkViewOverlay.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
       
-      let height: CGFloat = 200
+      let height: CGFloat = CGFloat(settings.count) * cellHeight
       let y = window.frame.height - height
       collectionView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
       
@@ -98,7 +99,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: collectionView.frame.width, height: 48)
+    return CGSize(width: collectionView.frame.width, height: cellHeight)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

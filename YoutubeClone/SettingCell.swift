@@ -16,7 +16,7 @@ class SettingCell: BaseCell {
       
       if let imageName = setting?.imageName {
         print(imageName)
-        icon.image = UIImage(named: imageName)
+        icon.image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
       }
     }
   }
@@ -24,6 +24,7 @@ class SettingCell: BaseCell {
   let nameLabel: UILabel = {
     let l = UILabel()
     l.text = "Setting"
+    l.font = UIFont.systemFont(ofSize: 14)
     return l
   }()
   
@@ -40,8 +41,8 @@ class SettingCell: BaseCell {
     addSubview(icon)
     addSubview(nameLabel)
     
-    addConstraintsWithFormat("H:|-8-[v0(32)]-16-[v1]|", views: icon, nameLabel)
-    addConstraintsWithFormat("V:[v0(32)]", views: icon)
+    addConstraintsWithFormat("H:|-8-[v0(28)]-16-[v1]|", views: icon, nameLabel)
+    addConstraintsWithFormat("V:[v0(28)]", views: icon)
     addConstraintsWithFormat("V:|[v0]|", views: nameLabel)
     
     addConstraint(NSLayoutConstraint(item: icon, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
