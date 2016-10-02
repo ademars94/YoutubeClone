@@ -52,7 +52,7 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
       Setting(name: .feedback, imageName: "feedback-icon"),
       Setting(name: .help, imageName: "help-icon"),
       Setting(name: .switchAccount, imageName: "user-icon-alt"),
-      Setting(name: .cancel, imageName: "gear-icon")
+      Setting(name: .cancel, imageName: "x-icon")
     ]
   }()
   
@@ -64,7 +64,6 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
     
     collectionView.dataSource = self
     collectionView.delegate = self
-    
     collectionView.register(SettingCell.self, forCellWithReuseIdentifier: cellId)
   }
   
@@ -103,6 +102,10 @@ class SettingsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDe
       }
     }
   }
+  
+  // ============================
+  // MARK: CollectionView Methods
+  // ============================
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return settings.count

@@ -20,6 +20,8 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     return cv
   }()
   
+  var homeController: HomeController?
+  
   let cellId = "menuBarCellId"
   let imageNames = ["home-icon", "fire-icon", "playlist-icon", "user-icon"]
   
@@ -75,13 +77,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // Get x value depending on which item is selected times one fourth of the view width
-    let x = CGFloat(indexPath.item) * self.frame.width / 4
-    self.horizontalBarLeftAnchorConstraint?.constant = x
-    
-    UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-      self.layoutIfNeeded()
-    }, completion: nil)
+    homeController?.showViewAt(menuIndex: indexPath.item)
   }
   
   required init?(coder aDecoder: NSCoder) {
