@@ -10,6 +10,8 @@
 		E5162C781D9EE8A600CAC7AF /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5162C771D9EE8A600CAC7AF /* SettingsLauncher.swift */; };
 		E51CFFB01DA035E80061755B /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51CFFAF1DA035E80061755B /* SettingCell.swift */; };
 		E52576E11D9D98B2000013D3 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52576E01D9D98B2000013D3 /* Video.swift */; };
+		E52B299C1DA1C7CE005F7A68 /* SafeJsonObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B299B1DA1C7CE005F7A68 /* SafeJsonObject.swift */; };
+		E52B299E1DA1C7EB005F7A68 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B299D1DA1C7EB005F7A68 /* Channel.swift */; };
 		E54DB4131DA0857F00210F88 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54DB4121DA0857F00210F88 /* NetworkManager.swift */; };
 		E54DB4151DA09A8C00210F88 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54DB4141DA09A8C00210F88 /* FeedCell.swift */; };
 		E54DB4171DA0ABD200210F88 /* TrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54DB4161DA0ABD200210F88 /* TrendingCell.swift */; };
@@ -27,6 +29,8 @@
 		E5162C771D9EE8A600CAC7AF /* SettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 		E51CFFAF1DA035E80061755B /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		E52576E01D9D98B2000013D3 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		E52B299B1DA1C7CE005F7A68 /* SafeJsonObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafeJsonObject.swift; sourceTree = "<group>"; };
+		E52B299D1DA1C7EB005F7A68 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		E54DB4121DA0857F00210F88 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E54DB4141DA09A8C00210F88 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		E54DB4161DA0ABD200210F88 /* TrendingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingCell.swift; sourceTree = "<group>"; };
@@ -56,7 +60,9 @@
 		E52576DF1D9D98A8000013D3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E52B299B1DA1C7CE005F7A68 /* SafeJsonObject.swift */,
 				E52576E01D9D98B2000013D3 /* Video.swift */,
+				E52B299D1DA1C7EB005F7A68 /* Channel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -218,11 +224,13 @@
 				E58B3C1A1D9C8D16007A06C0 /* HomeController.swift in Sources */,
 				E52576E11D9D98B2000013D3 /* Video.swift in Sources */,
 				E577FBA21D9D5F7F00340393 /* VideoCell.swift in Sources */,
+				E52B299E1DA1C7EB005F7A68 /* Channel.swift in Sources */,
 				E5162C781D9EE8A600CAC7AF /* SettingsLauncher.swift in Sources */,
 				E577FB9F1D9D5B2400340393 /* Extensions.swift in Sources */,
 				E58B3C181D9C8D16007A06C0 /* AppDelegate.swift in Sources */,
 				E51CFFB01DA035E80061755B /* SettingCell.swift in Sources */,
 				E577FBA51D9D64AB00340393 /* MenuBar.swift in Sources */,
+				E52B299C1DA1C7CE005F7A68 /* SafeJsonObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

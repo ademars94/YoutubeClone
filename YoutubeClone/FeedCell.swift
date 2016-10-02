@@ -41,7 +41,7 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
   // ========================
   
   func fetchVideos() {
-    NetworkManager.shared.fetchFeedFor(urlString: "https://s3-us-west-2.amazonaws.com/youtubeassets/home.json") { (videos: [Video]) in
+    NetworkManager.shared.fetchFeedFor(urlString: "https://s3-us-west-2.amazonaws.com/youtubeassets/home_num_likes.json") { (videos: [Video]) in
       self.videos = videos
       self.collectionView.reloadData()
     }

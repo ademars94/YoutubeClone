@@ -6,9 +6,9 @@
 //  Copyright © 2016 Alex DeMars. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class Video: NSObject {
+class Video: SafeJsonObject {
   
   var thumbnail_image_name: String?
   var title: String?
@@ -36,12 +36,5 @@ class Video: NSObject {
     super.init()
     setValuesForKeys(videoDictionary)
   }
-  
-}
-
-class Channel: NSObject {
-  
-  var name: String?
-  var profile_image_name: String?
   
 }
