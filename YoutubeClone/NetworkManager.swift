@@ -12,8 +12,8 @@ class NetworkManager: NSObject {
   
   static let shared = NetworkManager()
   
-  func fetchVideos(completion: @escaping ([Video]) -> ()) {
-    let url = URL(string: "https://s3-us-west-2.amazonaws.com/youtubeassets/home.json")
+  func fetchFeedFor(urlString: String, completion: @escaping ([Video]) -> ()) {
+    let url = URL(string: urlString)
     
     URLSession.shared.dataTask(with: url!) { (data, response, error) in
       if error != nil {
@@ -21,35 +21,16 @@ class NetworkManager: NSObject {
         return
       }
       do {
-        let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-        
-        var videos = [Video]()
-        
-        for dictionary in json as! [[String: AnyObject]] {
-          let video = Video()
-          video.title = dictionary["title"] as? String
-          video.thumbnailImageName = dictionary["thumbnail_image_name"] as? String
-          
-          let channelDictionary = dictionary["channel"] as! [String: AnyObject]
-          
-          let channel = Channel()
-          channel.name = channelDictionary["name"] as? String
-          channel.profileImageName = channelDictionary["profile_image_name"] as? String
-          
-          video.channel = channel
-          
-          videos.append(video)
+        if let unwrappedData = data, let jsonObjects = try JSONSerialization.jsonObject(with: unwrappedData, options: .mutableContainers) as? [[String: Any]] {
+          DispatchQueue.main.async {
+            completion(jsonObjects.map({ return Video(videoDictionary: $0) })) // Creates dictionary of Videos and runs completion block using that array
+          }
         }
-        
-        DispatchQueue.main.async {
-          completion(videos)
-        }
-        
       } catch let jsonError {
         print(jsonError)
       }
       
-    }.resume()
+      }.resume()
   }
   
 }

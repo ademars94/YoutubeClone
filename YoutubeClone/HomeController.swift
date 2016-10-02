@@ -10,8 +10,16 @@ import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
-  private var videos: [Video]?
-  private let cellId = "cellId"
+  let feedCellId = "feedCellId"
+  let trendingCellId = "trendingCellId"
+  let subscriptionsCellId = "subscriptionsCellId"
+  let titles = ["Home", "Trending", "Subscriptions", "Account"]
+  
+  lazy var titleLabel: UILabel = {
+    let l = UILabel()
+    l.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 32, height: self.view.frame.height)
+    return l
+  }()
   
   lazy var menuBar: MenuBar = {
     let mb = MenuBar()
@@ -27,8 +35,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    fetchVideos()
     
     navigationController?.navigationBar.isTranslucent = false
     
@@ -50,7 +56,11 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     collectionView?.backgroundColor = UIColor.white
 //    collectionView?.register(VideoCell.self, forCellWithReuseIdentifier: "cellId")
-    collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: "cellId")
+    collectionView?.register(FeedCell.self, forCellWithReuseIdentifier: feedCellId)
+    collectionView?.register(TrendingCell.self, forCellWithReuseIdentifier: trendingCellId)
+    collectionView?.register(SubscriptionsCell.self, forCellWithReuseIdentifier: subscriptionsCellId)
+    
+    
     collectionView?.contentInset = UIEdgeInsetsMake(50, 0, 0, 0) // Compensate for menu bar height
     collectionView?.scrollIndicatorInsets = UIEdgeInsetsMake(50, 0, 0, 0) // Compensate for menu bar height
     
@@ -60,7 +70,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   private func setupNavigationBar() {
     let searchBarButtonItem = UIBarButtonItem(image: UIImage(named: "search-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleSearch))
     let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
-    let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - 32, height: view.frame.height))
     
     titleLabel.text = "Home"
     titleLabel.textColor = UIColor.white
@@ -86,17 +95,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     view.addConstraintsWithFormat("V:[v0(50)]", views: menuBar)
     
     menuBar.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-  }
-  
-  // ========================
-  // MARK: Networking Methods
-  // ========================
-  
-  func fetchVideos() {
-    NetworkManager.shared.fetchVideos { (videos: [Video]) in
-      self.videos = videos
-      self.collectionView?.reloadData()
-    }
   }
   
   // ===============================
@@ -125,8 +123,16 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   // MARK: ScrollView Methods
   // ========================
   
+  private func setTitleFor(index: Int) {
+    titleLabel.text = titles[index]
+    navigationItem.titleView = titleLabel
+  }
+  
   func showViewAt(menuIndex: Int) {
     let indexPath = IndexPath(item: menuIndex, section: 0)
+    
+    setTitleFor(index: menuIndex)
+    
     collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
   }
   
@@ -137,6 +143,9 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     let viewIndex = targetContentOffset.pointee.x / view.frame.width
     let indexPath = IndexPath(item: Int(viewIndex), section: 0)
+    
+    setTitleFor(index: indexPath.item)
+    
     menuBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
   }
   
@@ -149,38 +158,20 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+    let identifier: String
     
-    return cell
+    switch indexPath.item {
+      case 1: identifier = trendingCellId
+      case 2: identifier = subscriptionsCellId
+      default: identifier = feedCellId
+    }
+    
+    return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: view.frame.width, height: view.frame.height)
+    return CGSize(width: view.frame.width, height: view.frame.height - 50)
   }
   
-  
-  
-//  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//    return videos?.count ?? 0
-//  }
-//  
-//  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! VideoCell
-//    
-//    cell.video = videos?[indexPath.item]
-//    
-//    return cell
-//  }
-//  
-//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//    // Get 16:9 ratio, accounting for 16px margins and added view heights
-//    let height = (view.frame.width - 32) * (9 / 16) + 96
-//    return CGSize(width: view.frame.width, height: height)
-//  }
-//  
-//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//    return 0
-//  }
-//  
 }
 
